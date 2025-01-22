@@ -1,11 +1,11 @@
 ﻿namespace MyRecipeBook.Communication.Requests;
 public class RequestRegisterUserJson
 {
-    public String name { get; set; } = string.Empty;
+    public String Name { get; set; } = string.Empty;
     
-    public String email { get; set; } = string.Empty;
+    public String Email { get; set; } = string.Empty;
     
-    public String password { get; set; } = string.Empty;
+    public String Password { get; set; } = string.Empty;
     
     
 }
