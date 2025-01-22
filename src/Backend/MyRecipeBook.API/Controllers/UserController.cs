@@ -13,4 +13,11 @@ public class UserController : ControllerBase
     {
         return Created();
     }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status200OK)]
+    public IActionResult getAllUsers(RequestRegisterUserJson request)
+    {
+        return Ok();
+    }
 }
