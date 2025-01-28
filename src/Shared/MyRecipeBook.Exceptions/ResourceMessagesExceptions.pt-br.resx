@@ -23,4 +23,7 @@
     <data name="EMAIL_INVALID" xml:space="preserve">
         <value>O email e invalido</value>
     </data>
+    <data name="UNKNOWN_ERROR" xml:space="preserve">
+        <value>Erro desconhecido</value>
+    </data>
 </root>

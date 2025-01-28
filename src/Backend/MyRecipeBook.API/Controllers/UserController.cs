@@ -12,12 +12,11 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ResponseRegisteredUserJson),StatusCodes.Status201Created)]
     public IActionResult Register(RequestRegisterUserJson request)
     {
-
         var useCase = new RegisterUserUseCase();
-        
+
         var result = useCase.Execute(request);
-        
-        return Created(string.Empty,result);
+
+        return Created(string.Empty, result);
     }
     
 }

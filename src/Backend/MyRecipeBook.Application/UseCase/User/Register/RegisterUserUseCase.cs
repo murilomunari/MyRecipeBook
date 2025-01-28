@@ -1,6 +1,7 @@
 ﻿using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
-using FluentValidation; // Certifique-se de que está usando FluentValidation
+using FluentValidation;
+using MyRecipeBook.Exceptions.ExceptionsBase; // Certifique-se de que está usando FluentValidation
 
 namespace MyRecipeBook.Application.UseCase.User.Register;
 
@@ -35,10 +36,10 @@ public class RegisterUserUseCase
 
         if (!result.IsValid)
         {
-            var errors = string.Join(", ", result.Errors.Select(x => x.ErrorMessage));
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
 
-            // Lança uma exceção mais informativa
-            throw new ValidationException($"Validation failed: {errors}");
+            
+            throw new ErrorOnValidationException(errorMessages);
         }
     }
 }
