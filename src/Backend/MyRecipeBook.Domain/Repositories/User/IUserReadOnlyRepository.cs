@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyRecipeBook.Domain.Repositories.User
 {
-    internal interface IUserReadOnlyRepository
+    public interface IUserReadOnlyRepository
     {
     }
 }

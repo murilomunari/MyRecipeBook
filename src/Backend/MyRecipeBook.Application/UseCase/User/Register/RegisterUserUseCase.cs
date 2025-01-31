@@ -3,13 +3,18 @@ using MyRecipeBook.Communication.Responses;
 using FluentValidation;
 using MyRecipeBook.Application.Services.AutoMapper;
 using MyRecipeBook.Application.Services.Criptography;
-using MyRecipeBook.Exceptions.ExceptionsBase; // Certifique-se de que está usando FluentValidation
+using MyRecipeBook.Exceptions.ExceptionsBase;
+using MyRecipeBook.Domain.Repositories.User; // Certifique-se de que está usando FluentValidation
 
 namespace MyRecipeBook.Application.UseCase.User.Register;
 
 public class RegisterUserUseCase
 {
-    public ResponseRegisteredUserJson Execute(RequestRegisterUserJson request)
+    private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
+
+    private readonly IUserReadOnlyRepository _userReadOnlyRepository;
+
+    public async Task<ResponseRegisteredUserJson>  Execute(RequestRegisterUserJson request)
     {
         var criptografiaDeSenha = new PasswordEncrypter();
         
@@ -22,10 +27,8 @@ public class RegisterUserUseCase
         var user = autoMapper.Map<Domain.Entities.User>(request);
         
         user.Password = criptografiaDeSenha.Encrypt(request.Password);
-        
-        
-        // Salvar no banco de dados
-        // Exemplo: _repository.Save(userEntity);
+
+        await _userWriteOnlyRepository.Add(user);
 
         return new ResponseRegisteredUserJson
         {
