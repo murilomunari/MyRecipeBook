@@ -4,6 +4,7 @@ using MyRecipeBook.Communication.Responses;
 using FluentValidation;
 using MyRecipeBook.Application.Services.AutoMapper;
 using MyRecipeBook.Application.Services.Criptography;
+using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Exceptions.ExceptionsBase;
 using MyRecipeBook.Domain.Repositories.User; // Certifique-se de que está usando FluentValidation
 
@@ -15,17 +16,21 @@ public class RegisterUserUseCase : IRegisterUseCase
 
     private readonly IUserReadOnlyRepository _userReadOnlyRepository;
     
+    private readonly IUnitOfWork _unitOfWork;
+    
     private readonly IMapper _mapper;
     
     private readonly PasswordEncrypter _passwordEncripter;
 
     public RegisterUserUseCase(IUserWriteOnlyRepository userWriteOnlyRepository,
         IUserReadOnlyRepository userReadOnlyRepository,
+        IUnitOfWork unitOfWork,
         IMapper mapper,
         PasswordEncrypter passwordEncripter)
     {
         _userWriteOnlyRepository = userWriteOnlyRepository;
         _userReadOnlyRepository = userReadOnlyRepository;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
     }
@@ -42,6 +47,8 @@ public class RegisterUserUseCase : IRegisterUseCase
         user.Password = _passwordEncripter.Encrypt(request.Password);
 
         await _userWriteOnlyRepository.Add(user);
+        
+        await _unitOfWork.Commit();
 
         return new ResponseRegisteredUserJson
         {

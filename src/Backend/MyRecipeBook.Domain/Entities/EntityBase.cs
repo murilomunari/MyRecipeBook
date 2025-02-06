@@ -6,5 +6,5 @@ public class EntityBase
     
     public bool Active { get; set; } = true;
     
-    public DateTime CreateOn { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 }
