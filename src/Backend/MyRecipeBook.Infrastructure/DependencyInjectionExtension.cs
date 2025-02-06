@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyRecipeBook.Domain.Enums;
 using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Infrastructure.DataAccess;
@@ -9,15 +11,23 @@ namespace MyRecipeBook.Infrastructure;
 
 public static class DependencyInjectionExtension
 {
-    public static void AddInfrastructure(this IServiceCollection services)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddDbContext(services);
+        var databaseType = configuration["DatabaseType"];
+        
+        var databaseTypeEnum = (DatabaseType)Enum.Parse(typeof(DatabaseType), databaseType);
+
+        if (databaseTypeEnum == DatabaseType.MySql)
+        {
+            AddDbContext(services, configuration);
+        }
+        
         AddRepositories(services);
     }
 
-    private static void AddDbContext(IServiceCollection services)
+    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = "Server=localhost;Database=meulivrereceita;Uid=root;Pwd=Mu200101";
+        var connectionString = configuration.GetConnectionString("Connection");
     
         services.AddDbContext<MyRecipeBookDbContext>(dbContextOptions =>
             dbContextOptions.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));

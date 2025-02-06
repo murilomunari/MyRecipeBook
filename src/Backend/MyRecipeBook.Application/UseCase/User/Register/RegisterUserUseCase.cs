@@ -20,19 +20,19 @@ public class RegisterUserUseCase : IRegisterUseCase
     
     private readonly IMapper _mapper;
     
-    private readonly PasswordEncrypter _passwordEncripter;
+    private readonly PasswordEncrypter _passwordEncrypter;
 
     public RegisterUserUseCase(IUserWriteOnlyRepository userWriteOnlyRepository,
         IUserReadOnlyRepository userReadOnlyRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        PasswordEncrypter passwordEncripter)
+        PasswordEncrypter passwordEncrypter)
     {
         _userWriteOnlyRepository = userWriteOnlyRepository;
         _userReadOnlyRepository = userReadOnlyRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _passwordEncripter = passwordEncripter;
+        _passwordEncrypter = passwordEncrypter;
     }
         
 
@@ -44,7 +44,7 @@ public class RegisterUserUseCase : IRegisterUseCase
         
         var user = _mapper.Map<Domain.Entities.User>(request);
         
-        user.Password = _passwordEncripter.Encrypt(request.Password);
+        user.Password = _passwordEncrypter.Encrypt(request.Password);
 
         await _userWriteOnlyRepository.Add(user);
         

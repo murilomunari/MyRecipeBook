@@ -69,7 +69,7 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The email addres is invalid.
+        ///   Looks up a localized string similar to The email address is invalid.
         /// </summary>
         public static string EMAIL_INVALID {
             get {
