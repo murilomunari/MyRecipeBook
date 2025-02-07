@@ -15,7 +15,7 @@ public static class DependencyInjectionExtension
     {
         var databaseType = configuration["DatabaseType"];
         
-        var databaseTypeEnum = (DatabaseType)Enum.Parse(typeof(DatabaseType), databaseType);
+        var databaseTypeEnum = (DatabaseType)Enum.Parse(typeof(DatabaseType), databaseType!);
 
         if (databaseTypeEnum == DatabaseType.MySql)
         {
