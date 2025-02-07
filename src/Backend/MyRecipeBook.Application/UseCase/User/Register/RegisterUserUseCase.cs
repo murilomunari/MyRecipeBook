@@ -62,7 +62,7 @@ public class RegisterUserUseCase : IRegisterUseCase
         {
             result.Errors.Add(new FluentValidation.Results.ValidationFailure(
                 "Email", // Nome da propriedade que falhou na validação
-                "Este e-mail já está em uso. Escolha outro e-mail." // Mensagem personalizada
+                "This email is already in use. Choose another email." 
             ));
         }
         if (!result.IsValid)
